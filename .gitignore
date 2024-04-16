@@ -1,0 +1,8 @@
+apiservices/vendor/*
+apiservices/composer.json
+apiservices/composer.lock
+apiservices/includes/Conexion.php
+apiservices/includes/Constantes.php
+img_timbres
+conexion.php
+testUpdates.php
