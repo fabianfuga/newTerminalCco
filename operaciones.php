@@ -696,6 +696,8 @@ case 1:$estado="RENDIDO";break;
 case 2:$estado="ELIMINADA";break;
 }
 $usuario=obtenervalor("usuarios","nombre","where id=".$f["usuario"]."");
+if(intval($f["editadopor"])){$useredit=obtenervalor("usuarios","nombre","where id=".$f["editadopor"]."");}else{$useredit="";}
+
 $data[$f["id"]]=[
 "fechaunix"=>strtotime($f["fecha"]),
 "fecha"=>devfechahora($f["fecha"]),
@@ -711,6 +713,7 @@ $data[$f["id"]]=[
 "idestado"=>intval($f["estado"]),
 "estado"=>$estado,
 "usuario"=>$usuario,
+"editadopor"=>$useredit,
 "comentario"=>$f["comentarios"]
 ];
 }
@@ -721,25 +724,72 @@ break;
 case 'eliminarrecarga':
 $id=$_REQUEST["m_id"];
 $usuario=$_REQUEST["m_usuario"];
+$username=$_REQUEST["m_username"];
 $monto=$_REQUEST["m_monto"];
-$cuenta=$_REQUEST["m_cuenta"];
+$cuenta=intval($_REQUEST["m_cuenta"]);
 $tarjeta=$_REQUEST["m_codigo"];
 $cliente=$_REQUEST["m_cliente"];
 $fechahora=date("Y-m-d H:i:s",$_REQUEST["m_fecha"]);
 $fechahoy=date('Y-m-d');
-$comentarios="ElIMINADA ".$_REQUEST["comentarios"]."";
+if($_REQUEST["m_comentarios"] !=""){$comentarios = ", ".$_REQUEST["m_comentarios"];}else{$comentarios="";}
+$comentarios="ElIMINADA por: ".$username."".$comentarios."";
 $recorrido=0;
 $nuevomonto=0;
 $nuevosaldo=0;
 $estado=2;
+$saldoanterior=getSaldoAnterior($cuenta,$cliente,$tarjeta,$fechahora);
 
-$s="update movimientos set recorrido=".$recorrido.", monto=".$nuevomonto.", saldo=".$nuevosaldo.", estado=".$estado.", editadopor=".$usuario.", comentarios='".$comentarios."' where id='".$id."'";
-// $r=$link->query($s);
+$s="update movimientos set recorrido=".$recorrido.", monto=".$nuevomonto.", saldo=".$saldoanterior.", estado=".$estado.", editadopor=".$usuario.", comentarios='".$comentarios."' where id='".$id."'";
+$r=$link->query($s);
 
+if($cuenta===1){$consulta="where cliente=".$cliente." and fecha > '".$fechahora."'";}
+if($cuenta===2){$consulta="where codigo='".$tarjeta."' and fecha > '".$fechahora."'";}
+// actualiza todos los movimientos posteriores
+$s1="select id,tipo,monto from movimientos ".$consulta." order by fecha asc";
+$r1=$link->query($s1);
+if(mysqli_num_rows($r1) > 0){
+// exiten registros posteriores 
+$saldo = $saldoanterior;
+while($f1=mysqli_fetch_array($r1)){
+$tipo=intval($f1["tipo"]);
+$tarifa=$f1["monto"];
+if($tipo===1){$saldo +=$tarifa;}//recarga
+if($tipo===2){$saldo -= $tarifa;}//salida
 
+$s3= "update movimientos set saldo=".$saldo." where id=".$f1["id"]."";
+$r3=$link->query($s3);
+}
+
+if($cuenta===1){
+$s4="update tarjetas set saldo = ".$saldo." where idcliente= ".$cliente."";
+$r4=$link->query($s4);
+}
+if($cuenta===2){
+$s4="update tarjetas set saldo= ".$saldo." where codigo='".$tarjeta."'";
+$r4=$link->query($s4);
+}
+$s5="update clientes set saldo = ".$saldo." where id =".$cliente."";
+$r5=$link->query($s5);
+}else{
+if($cuenta===1){
+$s6="update tarjetas set saldo = ".$saldoanterior." where idcliente=".$cliente."";
+$r6=$link->query($s6);
+}
+if($cuenta===2){
+$s6="update tarjetas set saldo= ".$saldoanterior." where codigo='".$tarjeta."'";
+$r6=$link->query($s6);
+}
+$s7="update clientes set saldo = ".$saldoanterior." where id =".$cliente."";
+$r7=$link->query($s7);
+}
+
+$res=[
+"error"=>false,
+"mensaje"=>"Movimiento eliminado, registros actualizados",
+"saldoanterior"=>$saldoanterior
+];
+echo json_encode($res);
 break;
-
-
 
 }
 

@@ -163,5 +163,21 @@ $row=mysqli_fetch_array($cargas);
 return $row['saldo'];
 }
 
+function getSaldoAnterior($cuenta,$cliente,$tarjeta,$fechahora){
+global $link;
+if($cuenta==1){$consulta="where cliente='".$cliente."' and fecha < '".$fechahora."'";}
+if($cuenta==2){$consulta="where codigo='".$tarjeta."' and fecha < '".$fechahora."'";}
+$sql="select * from movimientos ".$consulta." order by id desc limit 0,1";
+$res=$link->query($sql);
+$cuenta = mysqli_num_rows($res);
+if($cuenta > 0){
+$fila=mysqli_fetch_array($res);
+$saldo=$fila["saldo"];
+}else{
+$saldo=0;
+}
+return $saldo;
+}
+
 
 ?>

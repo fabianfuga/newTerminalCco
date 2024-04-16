@@ -190,6 +190,7 @@ $("#tb27_movimientos tbody").html("<tr><td colspan='11' class='text-center'>busc
 
 var randomNo = Math.floor(Math.random()*9999999);
 $.get("operaciones.php", {numero:''+randomNo+'',operacion:'getMovimientosTer27',desde:fdesde,hasta:fhasta,idempresa:empresa, idpatente:patente, idmovimiento:movimiento,retornar:0},function(data){
+console.log(data);
 resBusqueda=$.parseJSON(data);
 listarResultados();
 });
@@ -202,12 +203,13 @@ listarResultados();
 function listarResultados(){
 f="";
 $.each(resBusqueda,function(i,v){
-if(parseInt(v.idestado)===3){
+if(parseInt(v.idestado)===2){
 accion="<span class='badge bg-danger'></span>";
-}else{accion="<button type='button' class='btn btn-danger btn-xs' onclick='eliminarRecarga("+i+")'>"+i_borrar+" ELIMINAR</button>";}
+spancomentario="<span class='badge bg-danger'>"+v.comentario+"</span>";
+}else{accion="<button type='button' class='btn btn-danger btn-xs' onclick='eliminarRecarga("+i+")'>"+i_borrar+" ELIMINAR</button>";spancomentario=v.comentario;}
 
 
-f+="<tr><td>"+v.fecha+"</td><td>"+v.tarjeta+"</td><td>"+v.patente+"</td><td>"+v.empresa+"</td><td>"+v.tipo+"</td><td>"+v.monto+"</td><td>"+v.saldo+"</td><td>"+v.estado+"</td><td>"+v.usuario+"</td><td>"+v.comentario+"</td><td class='text-center'>"+accion+"</td></tr>";
+f+="<tr><td>"+v.fecha+"</td><td>"+v.tarjeta+"</td><td>"+v.patente+"</td><td>"+v.empresa+"</td><td>"+v.tipo+"</td><td>"+v.monto+"</td><td>"+v.saldo+"</td><td>"+v.estado+"</td><td>"+v.usuario+"</td><td>"+spancomentario+"</td><td class='text-center'>"+accion+"</td></tr>";
 });
 $("#tb27_movimientos tbody").html("");
 let tb_mov27 = new DataTable('#tb27_movimientos');
@@ -247,10 +249,22 @@ function confirmarEliminación(e,id,monto,cuenta,codigo,cliente,fecha){
 $(e).html("espera por favor..."+i_cargando+"");
 $(e).attr("disabled",true);
 let iduser=$("#userid").val();
+let username=$("#username").val();
 let comentarios = $("#comentarios_et27").val();
 var randomNo = Math.floor(Math.random()*9999999);
-$.post("operaciones.php", {numero:''+randomNo+'',operacion:'eliminarrecarga',m_id:id,m_monto:monto,m_cuenta:cuenta,m_codigo:codigo,m_cliente:cliente,m_fecha:fecha,m_usuario:iduser,m_comentarios:comentarios,retornar:0},function(data){
-console.log(data);
+$.post("operaciones.php", {numero:''+randomNo+'',operacion:'eliminarrecarga',m_id:id,m_monto:monto,m_cuenta:cuenta,m_codigo:codigo,m_cliente:cliente,m_fecha:fecha,m_usuario:iduser,m_comentarios:comentarios,m_username:username,retornar:0},function(data){
+res = $.parseJSON(data);
+if(!res.error){
+resBusqueda[id]["comentario"]="Eliminada por : "+username+","+comentarios;
+resBusqueda[id]["editadopor"]=username;
+resBusqueda[id]["monto"]=0;
+resBusqueda[id]["saldo"]=res.saldoanterior;
+resBusqueda[id]["idestado"]=2;
+resBusqueda[id]["estado"]="ELIMINADA";
+listarResultados();
+$("#m_t27").modal("hide");
+
+}
 // location.reload();
 }); 
 

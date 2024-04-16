@@ -158,6 +158,7 @@ if($idmenu === intval($i1)){$moa="active";}else{$moa="";}
 <div class="content-wrapper" style="min-height: 444px;">
 <section class="content">
 <input type="hidden" id="userid" value="<?=$id;?>"/>
+<input type="hidden" id="username" value="<?=$misdatos["nombre"];?>"/>
 <input type="hidden" id="ippos" value="<?=$ippos;?>"/>
 <input type="hidden" id="cod_softland" value="<?=$codsofland;?>"/>
 <div class="container-fluid">
