@@ -1,6 +1,11 @@
 <div class="container">
-<div class="row mt20 c_7">
-<div class="col-12">
+<?
+if($_SESSION["perfilusuario"]==3){
+echo "<div class='row mt-2'><div class='alert alert-success'><a href ='index.php?mod=2&subid=recaudacion' class='btn btn-primary '><span>Volver al Menu</span></a></div></div>";
+}
+?>
+<div class="row mt-2 c_7">
+<div class="col-md-12">
 <h3>Consultar Saldo</h3>
 <div class="card mt20">
 <!--<div class="card-header">
@@ -8,22 +13,17 @@
 </div>-->
 <div class="card-body">
 <div class="row">
-<div class="col-3">
+<div class="col-md-3">
 <label>Código Tarjeta</label>
 <input type="text" name="codigocard" id="codigo" class="form-control"/>
 </div>
-<div class="col-3 mt27">
+<div class="col-md-3 mt27">
 <button type="button" class="btn btn-success" onclick="consultaSaldo(this)">Consultar</button>
 </div>
-<div class="col-6" id="c_resultconsulta">
-
-
-
-
-
+<div class="col-md-6" id="c_resultconsulta">
+</div>
 </div>
 
-</div>
 </div>
 </div>
 </div>

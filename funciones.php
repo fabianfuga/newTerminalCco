@@ -1,4 +1,15 @@
 <?
+require __DIR__ . '/escpos/autoload.php';
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+
+require_once('includes/tcpdf/config/tcpdf_config.php');
+require_once('includes/tcpdf/tcpdf.php');
+require_once('includes/numeroaLetras.php');
+
+
 /**** CONSTANTES *********************/
 //192.168.0.114 -> print torre de control -> default
 //192.168.0.111 -> print porteria principal
@@ -48,6 +59,22 @@ $datos["nombre"]=$f["nombre"];
 return $datos;
 }
 
+function getRecorridosTarifados($idbus){
+global $link;
+$tarifas = getTarifasxRecorridos();
+$recorridos=[];
+$s="select rxb.idrecorrido,r.nombredestino as recorrido,r.idtipodestino, d.tipodestino as tiporecorrido from busesrecorridos rxb left outer join recorridos r on rxb.idrecorrido = r.iddestino left outer join tiporecorrido d on r.idtipodestino = d.idtipodestino where rxb.idbus=".$idbus."";
+$r=$link->query($s);
+while($f=mysqli_fetch_array($r)){
+$recorridos[$f["idrecorrido"]]=[
+"recorrido"=>$f["recorrido"],
+"tiporecorrido"=>$f["tiporecorrido"],
+"idtipodestino"=>$f["idtipodestino"],
+"tarifa"=>$tarifas[$f["idtipodestino"]]
+];
+}
+return $recorridos;
+}
 
 
 ?>

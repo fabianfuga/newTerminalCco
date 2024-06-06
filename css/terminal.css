@@ -1,10 +1,24 @@
 *{margin:0;padding:0;font-size: 14px;}
 html, body {background-color: #f8f9fa;}
+a{text-decoration: none !important;}
 .rznone{resize:none;}
 .daterangepicker  .ranges{float:right !important;}
 .chosen-container {
     min-height: 34px !important;
 	height: auto !important;
+}
+.pointer{cursor:pointer !important;}
+
+
+.parpadea {
+  animation-name: parpadeo;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name:parpadeo;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
 }
 
 .oculto{display:none;}
@@ -13,6 +27,8 @@ html, body {background-color: #f8f9fa;}
 .mt20{margin-top:20px;}
 .mt25{margin-top:25px;}
 .mt27{margin-top:27px;}
+.padtop7{padding-top:7px !important;}
+.txtnormal{font-weight:normal !important;}
 .header-verde{background-color: #00897b !important;color:#fff;}
 .header-rojo{background-color: #f62d51  !important;color:#fff;}
 .header-warning{background-color: #f9a825  !important;color:#000;}   
@@ -34,7 +50,79 @@ padding: 0.35rem !important;
 
 .btn-rounded {border-radius: 60px;padding: 7px 18px;}
 .btn-roundeds{border-radius: 60px;padding: 1px 5px;}
-
+/***** estilos menu emergente usuario *****/
+.navbar-nav>.user-menu .user-image {margin-top:1px !important;}
+.navbar-nav>.user-menu>.dropdown-menu{
+width:272px !important;
+margin-top:14px;
+position: absolute;
+right: 0;
+left: auto;
+}
+ul.dropdown-menu {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    border-color: rgba(120, 130, 140, 0.13); }
+    .topbar .dropdown-menu .dropdown-item {
+      padding: 7px 1.5rem; }
+ul.dropdown-user {
+    padding: 0px;
+    width: 270px; }
+ul.dropdown-user li .dw-user-box {
+    padding: 10px 15px;
+}
+ul.dropdown-user li {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+ul.dropdown-user li .dw-user-box .u-img {
+    width: 80px;
+    display: inline-block;
+    vertical-align: top;
+}
+ul.dropdown-user li .dw-user-box .u-img img {
+    width: 100%;
+    border-radius: 5px;
+}
+ul.dropdown-user li .dw-user-box .u-text {
+    display: inline-block;
+    padding-left: 10px;
+}
+ul.dropdown-user li.divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: rgba(120, 130, 140, 0.13);
+}
+ul.dropdown-user li a {
+    padding: 9px 15px;
+    display: block;
+    /* color: #54667a; */
+}
+ul.dropdown-user li a:hover {
+          background: #f2f7f8;
+          /* color: #1976d2; */
+          text-decoration: none; }
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+}
 /* estilos menu  ****/
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
 background-color: #717276 !important;
@@ -55,9 +143,12 @@ background-color: #717276 !important;
 
 
 .btn-danger{background:#f62d51 !important; color:#fff !important;border-color:transparent !important;}
+
 .btn-danger-active{background:#dc3545 !important; color:#fff !important;border-color:#dc3545 !important;}
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active{color: #f62d51 !important;background-color: transparent !important;border-color:#f62d51 !important;}
 .btn-danger-active:hover, .btn-danger-active:focus, .btn-danger-active:active{color:#dc3545 !important;background-color: transparent !important;border-color:#dc3545 !important;}
+
+.btn-inverse{background:#222 !important; color:#fff !important;border-color:transparent !important;}
 
 /***** botonera recargas ****/
 .manito{cursor:pointer; }
@@ -82,3 +173,122 @@ a:link.btntactil span{display:block;margin-top:60px;}
 .contmoneda{float:left;width:25%;}
 .contmoneda img{max-width:100%;}
 .contmoneda span{display:block;max-width:95%;}
+
+/***** alerts  ****/
+.alert-primary {
+    color: #084298;
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+}
+.alert-warning {
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+}
+.alert-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+}
+.alert-danger {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+/**** estilos usuarios *****/
+.iconlogin {width:40px;background-color: #0b9bd9 !important;border: 1px solid #0988be !important;color:#fff;}
+/* input[type='text'], select, input[type='password'], input[type='file']{border-radius: 10px !important;} */
+/* input[type='text'].grupo{border-radius: 0px 10px 10px 0 !important;} */
+input[type='text'].gruporight{border-radius: 10px 0px 0px 10px !important;}
+input[type='file'].gruporight{border-radius: 10px 0px 0px 10px !important;}
+/* .input-group-addon.igaright{border-radius: 0px 10px 10px 0 !important;} */
+/* .input-group-btn button.igaright{border-radius: 0px 10px 10px 0 !important;} */
+/* .input-group-addon.igaleft{border-radius: 10px 0px 0px 10px !important;} */
+.vistapdfrev embed{width:100%;}
+.vistaprevimg img{max-width:100%;}
+
+.user-img {
+    width: 45px;
+    position: relative;
+    display: inline-block;
+    margin: 0 10px 15px 0;
+}
+.user-img img {
+    width: 100%;
+}
+.img-circle {
+    border-radius: 100%;
+}
+
+.user-img .online {
+    background: #00897b;
+}
+.user-img .profile-status {
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    left: 33px;
+    position: absolute;
+    top: -1px;
+    width: 10px;
+}
+.mail-contnet {
+    display: inline-block;
+    width: 75%;
+    vertical-align: middle;
+}
+.mail-contnet h5 {
+    margin: 5px 0px 0;
+    line-height: 18px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2c2b2e;
+}
+/****** custodia ********/
+.btnubicacion {
+    margin-bottom: 5px;
+    margin-right: 10px;
+    width: 50px;
+    height: 40px;
+}
+.inpmedio {
+    width: 100px;
+    height: 40px !important;
+    text-align: center;
+}
+.btnselect {
+    border: 3px solid red !important;
+}
+.btnbulto {
+    margin-bottom: 5px;
+    margin-right: 10px;
+    width: 100px;
+    height: 40px;
+}
+.btnbodega {
+    margin-bottom: 5px;
+    width: 230px;
+    margin-right: 10px;
+    height: 40px;
+}
+.btnbultotipo {
+    margin-bottom: 5px;
+    margin-right: 10px;
+    width: 110px;
+    height: 40px;
+}
+.btningreso {
+    margin-bottom: 10px;
+    width: 230px;
+    height: 50px;
+}
+.btnentrega button {
+    padding: 25px 25px !important;
+}
+.btnmedio {
+    min-width: 50px;
+    height: 40px;
+    font-weight: bold;
+}

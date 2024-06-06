@@ -224,8 +224,8 @@ tb_mov27=$('#tb27_movimientos').DataTable({
 "lengthMenu": [[20,-1], [20,"Todos"]],
 "pageLength":20,
 "searching": true,
-"ordering": false,
-// "order": [[ 0, "desc" ]],
+"ordering": true,
+"order": [[ 0, "asc" ]], 
 "info": true
 });	
 

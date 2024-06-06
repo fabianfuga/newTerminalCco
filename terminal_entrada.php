@@ -36,7 +36,7 @@
 </div>
 
 <div class="row justify-content-start">
-<div class="col-4 offset-md-4 mt50">
+<div class="col-sm-4 offset-md-4 mt50">
 <main class="form-signin w-100 m-auto">
 <form id="logologin">
 <img class="mb-4" src="images/logo.png" >

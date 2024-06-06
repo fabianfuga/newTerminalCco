@@ -19,6 +19,11 @@
 
 
 <div class="container-fluid">
+<?
+if($_SESSION["perfilusuario"]==3){
+echo "<div class='row mt-2'><div class='col-md-12'><div class='alert alert-success'><a href ='index.php?mod=2&subid=recaudacion' class='btn btn-primary '><span>Volver al Menu</span></a></div></div></div>";
+}
+?>
 <div id="validaciondetarjeta" class="toasts-top-right fixed oculto">
 <div class="toast bg-danger fade show" role="alert" aria-live="assertive" aria-atomic="true"><div class="toast-header"><strong class="mr-auto">Error al registrar recarga</strong><button  type="button" class="ml-2 mb-1 close" aria-label="Close" onclick='cerrarAlerta()'><span aria-hidden="true">×</span></button></div><div class="toast-body"></div></div>
 </div>
@@ -152,9 +157,6 @@ echo">";?>
 </div>
 </div>
 
-<div class="row">
-<?if($_SESSION["perfilusuario"]==3){echo "<a href ='index.php?mod=2&subid=recaudacion' class='btn btn-danger btn-large'><span>Volver al Menu</span></a>";}?>
-</div>
 
 </div>
 

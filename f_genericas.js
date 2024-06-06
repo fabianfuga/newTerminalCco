@@ -32,6 +32,14 @@ const i_check="<i class='fa-regular fa-circle-check'></i>";
 const i_bus="<i class='fa-solid fa-bus'></i>";
 const i_tipotran="<i class='fa-regular fa-credit-card'></i>";
 const i_saldo="<i class='fa-solid fa-money-check-dollar'></i>";
+const i_alert="<i class='fa-solid fa-triangle-exclamation'></i>";
+const i_alertxl="<i class='fa-solid fa-xl fa-triangle-exclamation'></i>";
+const i_alert2xl="<i class='fa-solid fa-2xl fa-triangle-exclamation'></i>";
+const i_okcxl="<i class='fa-solid fa-xl fa-circle-check'></i>";
+const i_checksaldo="<i class='fa-solid fa-money-check-dollar'></i>";
+const i_up="<i class='fa-solid fa-arrow-up'></i>";
+const i_checksaldo_lg="<i class='fa-solid fa-lg fa-money-check-dollar'></i>";
+const i_checksaldo_xl="<i class='fa-solid fa-xl fa-money-check-dollar'></i>";
 
 
 $('.solonumeros').keyup(function (){
